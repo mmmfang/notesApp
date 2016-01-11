@@ -31,54 +31,75 @@ app.config(function($stateProvider, $urlRouterProvider){
 //the last line says if url doesn't match anything, go to '/list'
 
 
- var notes = [
-    {
-      id: "1",
-      title: 'First Note',
-      description: "This is my first note"
-    }, {
-      id: "2",
-      title: 'Second Note',
-      description: "This is my second note"
+//creating a service for data that needs to be shared amongst more than one 
+//controller, like all this notes. the factory's job is to return a service
+app.factory('NoteStore', function(){
+  var notes = [];
+
+  return {
+    list: function(){
+      return notes;
+    },
+
+    get:function(noteId){
+      for (var i=0; i<notes.length; i++) {
+        if (notes[i].id===noteId) {
+          return notes[i];
+        }
+      }
+      return undefined;
+    },
+
+    create: function(note){
+        notes.push(note);
+    },
+
+    update: function(noteId) {
+      for (var i=0; i<notes.length; i++) {
+        if (notes[i].id===note.id) {
+          notes[i] = note;
+          //in line above, we replace the note with our modified note
+          return;
+        }
+      }
     }
-    ];
+  }; 
+});
+
+ var notes = [
+    // {
+    //   id: "1",
+    //   title: 'First Note',
+    //   description: "This is my first note"
+    // }, {
+    //   id: "2",
+    //   title: 'Second Note',
+    //   description: "This is my second note"
+    // }
+  ];
+//since we can add new notes, no need to have dummy data 
 
 
-app.controller("ListCtrl", function($scope){
-  $scope.notes = notes;
-//now just refers to the notes variable that is outside
+//first created the getNote, updateNote and createNote functions outside of controllers to 
+//help us get the note per the noteID that is needed in edit controller. But after creating
+//a factory, we moved these functions into the NoteStore service
+
+
+app.controller("ListCtrl", function($scope, NoteStore){
+  //$scope.notes = notes;
+  //now just refers to the notes variable that is outside
+
+  $scope.notes = NoteStore.list();
+  //we added the service to this controller just by dependency injection,
+  //to return all the notes
+
 });
 
 
 
-//created this function outside of controllers to help us get the note per the noteID
-//that is needed in edit controller
-function getNote(noteId) {
-  for (var i=0; i<notes.length; i++) {
-    if (notes[i].id===noteId) {
-      return notes[i];
-    }
-  }
-  return undefined;
-}
-
-function updateNote(note) {
-  for (var i=0; i<notes.length; i++) {
-    if (notes[i].id===note.id) {
-      notes[i] = note;
-      //in line above, we replace the note with our modified note
-      return;
-    }
-  }
-}
-
-function createNote(note) {
-  notes.push(note);
-}
-
 //****** $state - will let us access the parameter we get from the URL 
 //here it is the id of the note
-app.controller('EditCtrl', function($scope, $state){
+app.controller('EditCtrl', function($scope, $state, NoteStore){
   //$scope.noteId = $state.params.noteId;
   //this will set a variable on scope with our noteID
   
@@ -91,7 +112,10 @@ app.controller('EditCtrl', function($scope, $state){
   $scope.note = angular.copy(getNote($state.params.noteId));
 
   $scope.save = function(){
-    updateNote($scope.note);
+    
+    //updateNote($scope.note);
+    NoteStore.update($scope.note);
+
     //after we update the note, we need to go back to list view,
     //we can use state service to navigate back
     $state.go('list');
@@ -100,7 +124,7 @@ app.controller('EditCtrl', function($scope, $state){
 });
 
 
-app.controller('AddCtrl', function($scope, $state){
+app.controller('AddCtrl', function($scope, $state, NoteStore){
 
   $scope.note = {
     id: new Date().getTime().toString(),
@@ -111,7 +135,9 @@ app.controller('AddCtrl', function($scope, $state){
   //using the Date as id since we want a unique value here
 
   $scope.save = function(){
-    createNote($scope.note);
+    //createNote($scope.note);
+    NoteStore.create($scope.note);
+
     //after we update the note, we need to go back to list view,
     //we can use state service to navigate back
     $state.go('list');
