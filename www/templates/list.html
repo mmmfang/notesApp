@@ -1,20 +1,22 @@
-<!--         Adding an edit state -->
+        Adding an edit state -->
 
  <ion-view title="My Notes">	
     <ion-content ng-controller="ListCtrl">
       <a href="#/add" class="button button-calm button-block ">New Note</a>
  
-      <div class="list" >
+      <ion-list>
       	</a>
  <!--        <a href="#/edit" class="item" ng-repeat="note in notes"> -->
-        <a href="#/edit/{{note.id}}" class="item" ng-repeat="note in notes">
+        <ion-item href="#/edit/{{note.id}}" class="item" ng-repeat="note in notes">
           <h2>{{note.title}}</h2>
           <p>{{note.description}}</p>
-        </a>
-		</div>
+        <ion-option-button>Delete</ion-option-button>
+        </ion-item>
+  <!--        This button is revealed only when swiping that button -->
+		</ion-list>
       </ion-content>
 </ion-view>	
 
       <!--     moved this out of index.html, moved to templates folder
       this view will load in the ion-nav-view div
-       -->
+      
