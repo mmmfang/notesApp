@@ -7,9 +7,11 @@
       	</a>
  <!--        <a href="#/edit" class="item" ng-repeat="note in notes"> -->
         <ion-item class="item-remove-animate" href="#/edit/{{note.id}}" 
-        class="item" ng-repeat="note in notes">
+        class="item" ng-repeat="note in notes track by note.id">
           <h2>{{note.title}}</h2>
           <p>{{note.description}}</p>
+          <i class="icon ion-arrow-right-b"></i>
+        <ion-reorder-button class="ion-drag"></ion-reorder-button>
         <ion-option-button class="button-assertive icon-left ion-trash-b" 
         ng-click="remove(note.id)">Delete</ion-option-button>
         </ion-item>
