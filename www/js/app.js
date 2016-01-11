@@ -54,8 +54,13 @@ app.controller("ListCtrl", function($scope, NoteStore){
   //we added the service to this controller just by dependency injection,
   //to return all the notes
   $scope.remove = function(noteId){
-    NoteStore.remove(noteId)
-  }
+    NoteStore.remove(noteId);
+  };
+
+  $scope.move = function(note, fromIndex, toIndex){
+
+  };
+
 });
 
 

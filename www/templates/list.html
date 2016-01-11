@@ -1,9 +1,9 @@
-        Adding an edit state -->
+  <!--      Adding an edit state -->
 
  <ion-view title="My Notes">	
     <ion-content ng-controller="ListCtrl">
  
-      <ion-list>
+      <ion-list show-reorder="true">
       	</a>
  <!--        <a href="#/edit" class="item" ng-repeat="note in notes"> -->
         <ion-item class="item-remove-animate" href="#/edit/{{note.id}}" 
@@ -11,7 +11,8 @@
           <h2>{{note.title}}</h2>
           <p>{{note.description}}</p>
           <i class="icon ion-arrow-right-b"></i>
-        <ion-reorder-button class="ion-drag"></ion-reorder-button>
+        <ion-reorder-button class="ion-drag" on-reorder="move(note, $fromIndex, $toIndex">
+    	</ion-reorder-button>
         <ion-option-button class="button-assertive icon-left ion-trash-b" 
         ng-click="remove(note.id)">Delete</ion-option-button>
         </ion-item>
