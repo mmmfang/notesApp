@@ -2,7 +2,6 @@
 
  <ion-view title="My Notes">	
     <ion-content ng-controller="ListCtrl">
-      <a href="#/add" class="button button-calm button-block ">New Note</a>
  
       <ion-list>
       	</a>
@@ -11,11 +10,15 @@
         class="item" ng-repeat="note in notes">
           <h2>{{note.title}}</h2>
           <p>{{note.description}}</p>
-        <ion-option-button class="button-assertive" ng-click="remove(note.id)">Delete</ion-option-button>
+        <ion-option-button class="button-assertive icon-left ion-trash-b" 
+        ng-click="remove(note.id)">Delete</ion-option-button>
         </ion-item>
   <!--        This button is revealed only when swiping that button -->
 		</ion-list>
       </ion-content>
+	<div class="bar bar-footer bar-stable">
+     <a href="#/add" class="button button-calm icon-left ion-compose">New Note</a>
+	</div>
 </ion-view>	
 
       <!--     moved this out of index.html, moved to templates folder
