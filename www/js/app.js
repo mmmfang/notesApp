@@ -4,7 +4,7 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-var app = angular.module('starter', ['ionic']);
+var app = angular.module('myNotes', ['ionic', 'mynotes.notestore']);
 
 
 //stateprovider service allows u to create new states
@@ -31,42 +31,7 @@ app.config(function($stateProvider, $urlRouterProvider){
 //the last line says if url doesn't match anything, go to '/list'
 
 
-//creating a service for data that needs to be shared amongst more than one 
-//controller, like all this notes. the factory's job is to return a service
-app.factory('NoteStore', function(){
-  var notes = [];
-
-  return {
-    list: function(){
-      return notes;
-    },
-
-    get:function(noteId){
-      for (var i=0; i<notes.length; i++) {
-        if (notes[i].id===noteId) {
-          return notes[i];
-        }
-      }
-      return undefined;
-    },
-
-    create: function(note){
-        notes.push(note);
-    },
-
-    update: function(noteId) {
-      for (var i=0; i<notes.length; i++) {
-        if (notes[i].id===note.id) {
-          notes[i] = note;
-          //in line above, we replace the note with our modified note
-          return;
-        }
-      }
-    }
-  }; 
-});
-
- var notes = [
+// var notes = [
     // {
     //   id: "1",
     //   title: 'First Note',
@@ -76,13 +41,12 @@ app.factory('NoteStore', function(){
     //   title: 'Second Note',
     //   description: "This is my second note"
     // }
-  ];
-//since we can add new notes, no need to have dummy data 
+//  ];
+//since we can add new notes, we have no need to have dummy data
+//then we had moved this to the noteStore service
 
 
-//first created the getNote, updateNote and createNote functions outside of controllers to 
-//help us get the note per the noteID that is needed in edit controller. But after creating
-//a factory, we moved these functions into the NoteStore service
+
 
 
 app.controller("ListCtrl", function($scope, NoteStore){
@@ -109,8 +73,9 @@ app.controller('EditCtrl', function($scope, $state, NoteStore){
 //if you want a save button..you can make a copy of hte object so any changes will be avail
 //in copy, and not affecting the listCtrl notes view, till we save
 
-  $scope.note = angular.copy(getNote($state.params.noteId));
-
+  $scope.note = angular.copy(NoteStore.get($state.params.noteId));
+  //$scope.note = angular.copy(getNote($state.params.noteId));
+  
   $scope.save = function(){
     
     //updateNote($scope.note);
