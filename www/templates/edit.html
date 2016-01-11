@@ -1,5 +1,5 @@
 <ion-view title="Edit Note">
-	<ion-content ng-controller="EditCtrl">
+	<ion-content>
 <!-- 		This is the edit view for {{note.id}}
 		<li>{{note.title}}</li>
 		<li>{{note.description}}</li>
@@ -16,6 +16,10 @@
 
 			<div class="item item-input">
 				<textarea cols="10" rows="5" ng-model="note.description"></textarea>
+			</div>
+
+			<div class="padding">
+				<button class="button button-block button-positive" ng-click="save()">Save</button>
 			</div>
 		</div>
 		

@@ -15,8 +15,16 @@ app.config(function($stateProvider, $urlRouterProvider){
   });
   $stateProvider.state('edit', {
     url:'/edit/:noteId',
-    templateUrl: 'templates/edit.html'
+    templateUrl: 'templates/edit.html',
+    controller: 'EditCtrl'
   });
+  $stateProvider.state('add', {
+    url:'/add',
+    templateUrl: 'templates/edit.html',
+    controller: 'AddCtrl'
+  });
+//using same template for ADD and EDIT functions, 
+//so that's why we set controller here
 
   $urlRouterProvider.otherwise('/list');
 });
@@ -51,6 +59,21 @@ function getNote(noteId) {
       return notes[i];
     }
   }
+  return undefined;
+}
+
+function updateNote(note) {
+  for (var i=0; i<notes.length; i++) {
+    if (notes[i].id===note.id) {
+      notes[i] = note;
+      //in line above, we replace the note with our modified note
+      return;
+    }
+  }
+}
+
+function createNote(note) {
+  notes.push(note);
 }
 
 //****** $state - will let us access the parameter we get from the URL 
@@ -60,9 +83,41 @@ app.controller('EditCtrl', function($scope, $state){
   //this will set a variable on scope with our noteID
   
   //this is to have a note object on the scope
-  $scope.note = getNote($state.params.noteId);
-})
+  //$scope.note = getNote($state.params.noteId);
+//right now the notes array is automatically being updated since there is no save button
+//if you want a save button..you can make a copy of hte object so any changes will be avail
+//in copy, and not affecting the listCtrl notes view, till we save
 
+  $scope.note = angular.copy(getNote($state.params.noteId));
+
+  $scope.save = function(){
+    updateNote($scope.note);
+    //after we update the note, we need to go back to list view,
+    //we can use state service to navigate back
+    $state.go('list');
+
+  };
+});
+
+
+app.controller('AddCtrl', function($scope, $state){
+
+  $scope.note = {
+    id: new Date().getTime().toString(),
+    title: '',
+    description:''
+  };
+
+  //using the Date as id since we want a unique value here
+
+  $scope.save = function(){
+    createNote($scope.note);
+    //after we update the note, we need to go back to list view,
+    //we can use state service to navigate back
+    $state.go('list');
+
+  };
+});
 
 app.run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -83,7 +138,7 @@ app.run(function($ionicPlatform) {
 });
 
 
-})(); 
+})();
 
 //wrapping everything in function. want the data from the $scope.notes (previously was just 
   //located in listCtrl, to be available to other controllers. you can place it outside the 
