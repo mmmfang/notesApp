@@ -1,5 +1,24 @@
 <ion-view title="Edit Note">
-	<ion-content>
-		This is the edit view
+	<ion-content ng-controller="EditCtrl">
+<!-- 		This is the edit view for {{note.id}}
+		<li>{{note.title}}</li>
+		<li>{{note.description}}</li>
+			 -->
+
+		<div class="list">
+			<div class="item item-input">
+<!-- 		<input type="text" value="{{note.title}}"> 
+				changing this to ng-model, since right now with {{ }} it is
+				just one way binding, we want two way binding	-->
+
+				<input type="text" ng-model="note.title">
+			</div>
+
+			<div class="item item-input">
+				<textarea cols="10" rows="5" ng-model="note.description"></textarea>
+			</div>
+		</div>
+		
+
 	</ion-content>
 </ion-view>
