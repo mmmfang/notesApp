@@ -46,9 +46,6 @@ app.config(function($stateProvider, $urlRouterProvider){
 //then we had moved this to the noteStore service
 
 
-
-
-
 app.controller("ListCtrl", function($scope, NoteStore){
   //$scope.notes = notes;
   //now just refers to the notes variable that is outside
@@ -56,7 +53,9 @@ app.controller("ListCtrl", function($scope, NoteStore){
   $scope.notes = NoteStore.list();
   //we added the service to this controller just by dependency injection,
   //to return all the notes
-
+  $scope.remove = function(noteId){
+    NoteStore.remove(noteId)
+  }
 });
 
 
@@ -75,7 +74,7 @@ app.controller('EditCtrl', function($scope, $state, NoteStore){
 
   $scope.note = angular.copy(NoteStore.get($state.params.noteId));
   //$scope.note = angular.copy(getNote($state.params.noteId));
-  
+
   $scope.save = function(){
     
     //updateNote($scope.note);

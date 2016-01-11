@@ -7,10 +7,11 @@
       <ion-list>
       	</a>
  <!--        <a href="#/edit" class="item" ng-repeat="note in notes"> -->
-        <ion-item href="#/edit/{{note.id}}" class="item" ng-repeat="note in notes">
+        <ion-item class="item-remove-animate" href="#/edit/{{note.id}}" 
+        class="item" ng-repeat="note in notes">
           <h2>{{note.title}}</h2>
           <p>{{note.description}}</p>
-        <ion-option-button>Delete</ion-option-button>
+        <ion-option-button class="button-assertive" ng-click="remove(note.id)">Delete</ion-option-button>
         </ion-item>
   <!--        This button is revealed only when swiping that button -->
 		</ion-list>
