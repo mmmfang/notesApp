@@ -58,7 +58,7 @@ app.controller("ListCtrl", function($scope, NoteStore){
   };
 
   $scope.move = function(note, fromIndex, toIndex){
-
+    NoteStore.move(note, fromIndex, toIndex);
   };
 
 });

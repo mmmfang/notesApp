@@ -50,6 +50,12 @@ function persist() {
       }
     },
 
+    move: function(note, fromIndex, toIndex) {
+      notes.splice(fromIndex,1); //saying remove the note from fromIndex     
+      notes.splice(toIndex, 0, note); //remove nothing from toIndex but insert note
+      persist(); //to save changes
+    },
+
     remove: function(noteId) {
       for (var i=0; i<notes.length; i++) {
         if (notes[i].id===noteId) {
