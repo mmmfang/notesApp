@@ -50,6 +50,7 @@ app.controller("ListCtrl", function($scope, NoteStore){
   //$scope.notes = notes;
   //now just refers to the notes variable that is outside
 
+  $scope.reordering = false; //setting this to false by default. without the reordering button, it was always in reordering mode
   $scope.notes = NoteStore.list();
   //we added the service to this controller just by dependency injection,
   //to return all the notes
@@ -59,6 +60,11 @@ app.controller("ListCtrl", function($scope, NoteStore){
 
   $scope.move = function(note, fromIndex, toIndex){
     NoteStore.move(note, fromIndex, toIndex);
+  };
+
+  $scope.toggleReordering = function(note, fromIndex, toIndex) {
+    $scope.reordering = !$scope.reordering;
+
   };
 
 });

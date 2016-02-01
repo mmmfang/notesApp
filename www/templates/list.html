@@ -1,13 +1,13 @@
   <!--      Adding an edit state -->
 
- <ion-view title="My Notes">	
-    <ion-content ng-controller="ListCtrl">
+ <ion-view title="My Notes"  ng-controller="ListCtrl">	
+    <ion-content>
  
-      <ion-list show-reorder="true">
+      <ion-list show-reorder="reordering"> <!-- allows you to toggle reordering state -->
       	</a>
  <!--        <a href="#/edit" class="item" ng-repeat="note in notes"> -->
-        <ion-item class="item-remove-animate" href="#/edit/{{note.id}}" 
-        class="item" ng-repeat="note in notes track by note.id">
+        <ion-item class="item-remove-animate item-icon-right" href="#/edit/{{note.id}}" 
+         ng-repeat="note in notes track by note.id">
           <h2>{{note.title}}</h2>
           <p>{{note.description}}</p>
           <i class="icon ion-arrow-right-b"></i>
@@ -21,6 +21,7 @@
       </ion-content>
 	<div class="bar bar-footer bar-stable">
      <a href="#/add" class="button button-calm icon-left ion-compose">New Note</a>
+     <button class="button button-light icon-left ion-shuffle" ng-click="toggleReordering()">Reorder</button>
 	</div>
 </ion-view>	
 
